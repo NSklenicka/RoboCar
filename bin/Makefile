@@ -190,9 +190,9 @@ DIST          = ../includes/settings.txt \
 		../includes/settings.cpp \
 		../includes/soundsensor.cpp \
 		../includes/talker.cpp
-QMAKE_TARGET  = RobotCarConsole
+QMAKE_TARGET  = robocar
 DESTDIR       = 
-TARGET        = RobotCarConsole
+TARGET        = robocar
 
 
 first: all
