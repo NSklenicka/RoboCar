@@ -1,0 +1,24 @@
+
+[Motor Settings]
+dutyCycle=100
+surgeDC=0
+surgeDelay=0
+frequency=3000
+turningDC=100
+turningMS=800
+switchDelay=700
+backupDuration = 500
+
+[Voice Settings]
+pitch= -0.8
+rate= -0.7
+isDirty = 0
+enabled = 0
+
+[OI Settings]
+OINums=4
+OiPollInterval=100
+
+[Prox Settings]
+proxEnabled = 0
+
