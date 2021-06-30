@@ -9,9 +9,6 @@ RobotCar::RobotCar(QObject *parent) : QObject(parent)
     greenLED = new IndicatorLED(PIN_LED_GREEN);
     redLED = new IndicatorLED(PIN_LED_RED);
 
-    //setup speech
-    talker = new Talker;
-
     //power supply monitor
     powerSupplyMonitor = new PowerMonitor;
     connect(powerSupplyMonitor, SIGNAL(underVoltageDetected()), this, SLOT(onLowVoltageDetected()));
@@ -38,6 +35,9 @@ RobotCar::RobotCar(QObject *parent) : QObject(parent)
     connect(settings, SIGNAL(settingsChanged()), this, SLOT(onSettingsChanged()));
     setAllParams();
 
+    //setup speech
+    ////talker = new //talk;
+
     QStringList args = QCoreApplication::arguments();
     qDebug() << "args: " << args;
     if(args.count() > 1)
@@ -48,7 +48,7 @@ RobotCar::RobotCar(QObject *parent) : QObject(parent)
     {
         proxSensorRear->start();
         proxSensorFront->start();
-        talker->talkWelcome();
+        //talk->talkWelcome();
         soundSensor->startPollingMultiTrigger();
         greenLED->turnOn();
     }
@@ -86,7 +86,7 @@ void RobotCar::processArgs()
 void RobotCar::calRoutine()
 {
     qDebug() << "Entering motor calibration routine";
-    talker->setEnabled(false);
+    ////talk->setEnabled(false);
     proxSensorRear->setEnabled(false);
     proxSensorFront->setEnabled(false);
     disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
@@ -101,7 +101,7 @@ void RobotCar::calRoutine()
 void RobotCar::rotateRoutine()
 {
     qDebug() << "Entering rotation calibration routine";
-    talker->setEnabled(false);
+    ////talk->setEnabled(false);
     proxSensorRear->setEnabled(false);
     proxSensorFront->setEnabled(false);
     disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
@@ -179,19 +179,19 @@ void RobotCar::setAllParams()
 
     double pitch = settings->voiceSettings.pitch;
     qDebug() << "pitch" << pitch;
-    talker->setPitch(pitch);
+    ////talk->setPitch(pitch);
 
     double rate = settings->voiceSettings.rate;
     qDebug() << "rate: " << rate;
-    talker->setRate(rate);
+    ////talk->setRate(rate);
 
     bool isDirty = settings->voiceSettings.isDirty;
     qDebug() << "isDirty: " << isDirty;
-    talker->setIsDirty(isDirty);
+    ////talk->setIsDirty(isDirty);
 
     bool voiceEnabled = settings->voiceSettings.enabled;
     qDebug() << "voiceEnabled: " << voiceEnabled;
-    talker->setEnabled(voiceEnabled);
+    ////talk->setEnabled(voiceEnabled);
 
     int oiNums = settings->oiSettings.OiNums;
     qDebug() << "oiNums: " << oiNums;
@@ -219,13 +219,13 @@ void RobotCar::onSoundDetected(int triggers)
             if(motor.getIsRunning())
             {
                 motor.stop();
-                talker->talkStopped();
+                ////talk->talkStopped();
                 soundSensor->startPollingMultiTrigger();
             }
             else //motor is not running
             {
                 motor.start();
-                talker->talkStarted();
+                ////talk->talkStarted();
                 soundSensor->startPollingSingleTrigger(); //only accept a single sound trigger while motor is running
             }
             break;
@@ -244,14 +244,14 @@ void RobotCar::onSoundDetected(int triggers)
 
         case 4:
              //toggle dirty spech
-             talker->toggleIsDirty();
+             //talk->toggleIsDirty();
              soundSensor->startPollingMultiTrigger();
              break;
 
 
        default:
             qDebug() << "Unhandled number of sound triggers: " << triggers;
-            talker->talk("I don't know what you want");
+            //talk->talk("I don't know what you want");
             soundSensor->startPollingMultiTrigger();
             break;
     }
@@ -262,7 +262,7 @@ void RobotCar::onSoundDetected(int triggers)
 void RobotCar::onOverCurrentDetected()
 {
     LOG
-    talker->talkOverCurrent();
+    //talk->talkOverCurrent();
     handleObstruction();
 }
 
@@ -272,7 +272,7 @@ void RobotCar::onLowVoltageDetected()
 {
     LOG
     motor.stop();
-    talker->talkBatteryLow();
+    //talk->talkBatteryLow();
     redLED->turnOn();
     powerSupplyMonitor->shutdownPi();
 }
@@ -283,7 +283,7 @@ void RobotCar::onOiWhileTurning()
 {
     LOG
     motor.stop();
-    talker->talkTurningError();
+    //talk->talkTurningError();
     redLED->turnOn();
 }
 
@@ -318,7 +318,7 @@ void RobotCar::onObstructionFrontDetected()
     //if moving same direction as sensor (forward)
     if(motor.getDirection() == 0)
     {
-        talker->talkObstacle();
+        //talk->talkObstacle();
         handleObstruction();
     }
 
@@ -344,7 +344,7 @@ void RobotCar::onObstructionRearDetected()
     //if moving same direction as sensor
     if(motor.getDirection() == 1)
     {
-        talker->talkObstacle();
+        //talker->talkObstacle();
         handleObstruction();
     }
 

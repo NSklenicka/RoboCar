@@ -42,6 +42,7 @@ class Settings : public QObject
 public:
     explicit Settings(QObject *parent = nullptr);
     bool getAllParams(); // read all settings from file, store in structs
+    bool getTalkEnabled();
 
     MotorSettings motorSettings;
     VoiceSettings voiceSettings;

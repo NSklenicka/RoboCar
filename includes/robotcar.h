@@ -42,6 +42,8 @@ private:
     void handleObstruction();
     void processArgs();
 
+    bool _talkEnabled = false;
+
 public slots:
 
     void onObstructionFrontDetected();

@@ -86,6 +86,14 @@ bool Settings::getAllParams()
     return true;
 }
 
+bool Settings::getTalkEnabled()
+{
+    QSettings qsettings(settingsPath, QSettings::IniFormat);
+    qsettings.beginGroup("Voice Settings");
+    voiceSettings.enabled = qsettings.value("enabled").toBool();
+    return voiceSettings.enabled;
+}
+
 
 
 
