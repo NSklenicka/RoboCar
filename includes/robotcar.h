@@ -53,6 +53,8 @@ public slots:
     void onSettingsChanged();
     void onCalOI();
     void onCalOITurning();
+    void calRoutine();
+    void rotateRoutine();
 };
 
 #endif // ROBOTCAR_H

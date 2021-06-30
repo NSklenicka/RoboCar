@@ -68,27 +68,48 @@ void RobotCar::processArgs()
     QStringList args = QCoreApplication::arguments();
     if(args.contains("-cal"))
     {
-        qDebug() << "Entering motor calibration routine";
-        talker->setEnabled(false);
-        proxSensorRear->setEnabled(false);
-        proxSensorFront->setEnabled(false);
-        disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
-        disconnect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onOiWhileTurning()));
-        connect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onCalOI()));
-        motor.start();
+        calRoutine();
     }
     else if(args.contains("-rotate"))
     {
-        qDebug() << "Entering rotation calibration routine";
-        talker->setEnabled(false);
-        proxSensorRear->setEnabled(false);
-        proxSensorFront->setEnabled(false);
-        disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
-        disconnect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onOiWhileTurning()));
-        connect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onCalOITurning()));
-        motor.rotate();
-        currentMonitor->startWhileTurning();
+        rotateRoutine();
     }
+    else if(args.contains("stop"))
+    {
+        motor.stop();
+        QCoreApplication::quit();
+    }
+}
+
+/////////////// Calibration ////////////////
+
+void RobotCar::calRoutine()
+{
+    qDebug() << "Entering motor calibration routine";
+    talker->setEnabled(false);
+    proxSensorRear->setEnabled(false);
+    proxSensorFront->setEnabled(false);
+    disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
+    disconnect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onOiWhileTurning()));
+    connect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onCalOI()));
+    motor.start();
+    soundSensor->startPollingSingleTrigger();
+}
+
+/////////////// Rotate Calibration////////////////
+
+void RobotCar::rotateRoutine()
+{
+    qDebug() << "Entering rotation calibration routine";
+    talker->setEnabled(false);
+    proxSensorRear->setEnabled(false);
+    proxSensorFront->setEnabled(false);
+    disconnect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onOverCurrentDetected()));
+    disconnect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onOiWhileTurning()));
+    connect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onCalOITurning()));
+    motor.rotate();
+    currentMonitor->startWhileTurning();
+    soundSensor->startPollingSingleTrigger();
 }
 
 /////////////// Settings ////////////////
