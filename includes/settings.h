@@ -55,7 +55,7 @@ public slots:
     void onFileChanged();
 
 private:
-    QString settingsPath = "/home/pi/Desktop/dev/RobotCarConsole/includes/settings.txt";
+    QString settingsPath = "/home/pi/Desktop/dev/robocar/includes/settings.txt";
     QFileSystemWatcher watcher;
     bool initFilWatcher();
 
