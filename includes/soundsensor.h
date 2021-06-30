@@ -22,7 +22,7 @@ public:
      */
 
     //void start(bool singleTrigger = false);
-    void startPollingSingleTrigger();
+    //void startPollingSingleTrigger();
     void startPollingMultiTrigger();
 
     void stop(); //stop polling the latch

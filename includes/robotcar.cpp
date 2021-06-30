@@ -93,7 +93,7 @@ void RobotCar::calRoutine()
     disconnect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onOiWhileTurning()));
     connect(currentMonitor, SIGNAL(overCurrentDetected()), this, SLOT(onCalOI()));
     motor.start();
-    soundSensor->startPollingSingleTrigger();
+    soundSensor->startPollingMultiTrigger();
 }
 
 /////////////// Rotate Calibration////////////////
@@ -109,7 +109,7 @@ void RobotCar::rotateRoutine()
     connect(currentMonitor, SIGNAL(oiWhileTurning()), this, SLOT(onCalOITurning()));
     motor.rotate();
     currentMonitor->startWhileTurning();
-    soundSensor->startPollingSingleTrigger();
+    soundSensor->startPollingMultiTrigger();
 }
 
 /////////////// Settings ////////////////
@@ -140,6 +140,8 @@ void RobotCar::onCalOITurning()
     motor.rotate();
     currentMonitor->startWhileTurning();
 }
+
+/////////////// Set Params ////////////////
 
 void RobotCar::setAllParams()
 {
@@ -215,39 +217,42 @@ void RobotCar::onSoundDetected(int triggers)
     qDebug() << "sounds detected: "<< triggers;
     switch (triggers)
     {
-       case 1: //single clap -  toggle motor start stop
+       case 1: //single clap -  toggle motor start
             if(motor.getIsRunning())
             {
-                motor.stop();
-                ////talk->talkStopped();
+                //talk something, but don't stop motor
                 soundSensor->startPollingMultiTrigger();
             }
             else //motor is not running
             {
                 motor.start();
-                ////talk->talkStarted();
-                soundSensor->startPollingSingleTrigger(); //only accept a single sound trigger while motor is running
+                //talk->talkStarted();
+                soundSensor->startPollingMultiTrigger();
             }
             break;
 
-       case 2:
-            //invert _direction
-            motor.invertDirection();
-            soundSensor->startPollingMultiTrigger();
-            break;
+    case 2:
+         //stop
+         motor.stop();
+         soundSensor->startPollingMultiTrigger();
+         break;
 
-       case 3:
-             //just spin the car around until interrupted
-             motor.rotate();
-             soundSensor->startPollingSingleTrigger();
-             break;
+//    case 3:
+//         //toggle dirty spech
+//         //talk->toggleIsDirty();
+//         soundSensor->startPollingMultiTrigger();
+//         break;
 
-        case 4:
-             //toggle dirty spech
-             //talk->toggleIsDirty();
-             soundSensor->startPollingMultiTrigger();
-             break;
+    case 3:
+        //cal routine
+        calRoutine();
+        soundSensor->startPollingMultiTrigger();
 
+    case 4:
+          //just spin the car around until interrupted
+          motor.rotate();
+          soundSensor->startPollingMultiTrigger();
+          break;
 
        default:
             qDebug() << "Unhandled number of sound triggers: " << triggers;

@@ -28,12 +28,12 @@ void SoundSensor::setPollingInterval(int pollingInterval)
         pollingTimer->start(pollingInterval);
 }
 
-void SoundSensor::startPollingSingleTrigger()
-{
-    LOG
-    _singleTrigger = true;
-    pollingTimer->start(_pollingInterval);
-}
+//void SoundSensor::startPollingSingleTrigger()
+//{
+//    LOG
+//    _singleTrigger = true;
+//    pollingTimer->start(_pollingInterval);
+//}
 
 void SoundSensor::startPollingMultiTrigger()
 {
@@ -41,13 +41,6 @@ void SoundSensor::startPollingMultiTrigger()
     _singleTrigger = false;
     pollingTimer->start(_pollingInterval);
 }
-
-//void SoundSensor::start(bool singleTrigger)
-//{
-//    LOG
-//    _singleTrigger = singleTrigger;
-//    pollingTimer->start(_pollingInterval);
-//}
 
 void SoundSensor::stop()
 {
@@ -74,7 +67,7 @@ void SoundSensor::waitForMultipleTriggers()
     timer.setSingleShot(true);
     timer.start(timeoutMS);
 
-    while(timer.remainingTime() > 0) //if we go 1 second with no other sound detected, break from loop
+    while(timer.remainingTime() > 0) //if we go a second (timeoutMS) with no other sound detected, break from loop
     {
         if(getLatchState()) //if sound detected
         {
@@ -84,15 +77,17 @@ void SoundSensor::waitForMultipleTriggers()
         DELAY(50);
     }
 
-    qDebug() << QString("emit soundDetected(%1)").arg(triggers);
+    qDebug() << QString("sounds detected (%1)").arg(triggers);
+
     emit soundDetected(triggers);
+
     //sound sensor must now be re-started by handler
 }
 
 void SoundSensor::pollForSound()
 {
     //LOG
-    if(getLatchState())  //if latch is high
+    if(getLatchState())  //if latch was triggered
     {
         //stop polling
         pollingTimer->stop();
