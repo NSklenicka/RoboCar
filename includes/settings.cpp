@@ -76,6 +76,7 @@ bool Settings::getAllParams()
     qsettings.endGroup();
 
     qsettings.beginGroup("OI Settings");
+    oiSettings.startDelay = qsettings.value("startDelay").toInt();
     oiSettings.OiNums = qsettings.value("OINums").toInt();
     oiSettings.OiPollInterval = qsettings.value("OiPollInterval").toInt();
     qsettings.endGroup();

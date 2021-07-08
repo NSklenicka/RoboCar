@@ -237,22 +237,23 @@ void RobotCar::onSoundDetected(int triggers)
          soundSensor->startPollingMultiTrigger();
          break;
 
-//    case 3:
-//         //toggle dirty spech
-//         //talk->toggleIsDirty();
-//         soundSensor->startPollingMultiTrigger();
-//         break;
-
     case 3:
         //cal routine
         calRoutine();
         soundSensor->startPollingMultiTrigger();
+        break;
 
     case 4:
           //just spin the car around until interrupted
           motor.rotate();
           soundSensor->startPollingMultiTrigger();
           break;
+
+//    case 5:
+//         //toggle dirty spech
+//         //talk->toggleIsDirty();
+//         soundSensor->startPollingMultiTrigger();
+//         break;
 
        default:
             qDebug() << "Unhandled number of sound triggers: " << triggers;
