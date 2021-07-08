@@ -207,10 +207,6 @@ void RobotCar::setAllParams()
     qDebug() << "proxEnabled: " << proxEnabled;
     proxSensorRear->setEnabled(proxEnabled);
     proxSensorFront->setEnabled(proxEnabled);
-
-    int startDelay = settings->oiSettings.startDelay;
-    qDebug() << "OI startDelay: " << startDelay;
-    currentMonitor->setStartDelayMS(startDelay);
 }
 
 /////////////// Sound Detected ////////////////
@@ -241,6 +237,12 @@ void RobotCar::onSoundDetected(int triggers)
          soundSensor->startPollingMultiTrigger();
          break;
 
+//    case 3:
+//         //toggle dirty spech
+//         //talk->toggleIsDirty();
+//         soundSensor->startPollingMultiTrigger();
+//         break;
+
     case 3:
         //cal routine
         calRoutine();
@@ -251,13 +253,6 @@ void RobotCar::onSoundDetected(int triggers)
           motor.rotate();
           soundSensor->startPollingMultiTrigger();
           break;
-
-
-    case 5:
-         //toggle dirty spech
-         //talk->toggleIsDirty();
-         soundSensor->startPollingMultiTrigger();
-         break;
 
        default:
             qDebug() << "Unhandled number of sound triggers: " << triggers;
@@ -361,4 +356,25 @@ void RobotCar::onObstructionRearDetected()
 	//reset sensor
     proxSensorRear->start();
 }
+
+
+/////////////// Not yet implemented.... ////////////////
+
+//void RobotCar::startRobotCar()
+//{
+//    LOG
+//    motor.start();
+//    proxSensorRear->start();
+//    proxSensorFront->start();
+//    currentMonitor->start();
+//}
+
+//void RobotCar::stopRobotCar()
+//{
+//    LOG
+//    motor.stop();
+//    proxSensorRear->stop();
+//    proxSensorFront->stop();
+//    currentMonitor->stop();
+//}
 

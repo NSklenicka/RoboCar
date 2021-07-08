@@ -44,7 +44,7 @@ private:
 
     int _pollingInterval = 250;
 
-    //bool _singleTrigger;
+    bool _singleTrigger;
 
     void waitForMultipleTriggers();
 

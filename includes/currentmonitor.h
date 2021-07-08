@@ -23,8 +23,6 @@ public:
     int getPollingInterval() const;
     int getNumPollsToTrigger() const;
 
-    void setStartDelayMS(int newStartDelayMS);
-
 signals:
 
     void overCurrentDetected();
@@ -33,7 +31,7 @@ signals:
 private:
 
     bool overCurrentHolds();
-    int _startDelayMS; //from settings file // not yet implemented
+
     QTimer *timer;
     int _pollingInterval; //from settings file
     int _numPollsToTrigger; //from settings file

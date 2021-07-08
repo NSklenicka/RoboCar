@@ -38,7 +38,7 @@ void SoundSensor::setPollingInterval(int pollingInterval)
 void SoundSensor::startPollingMultiTrigger()
 {
     LOG
-    //_singleTrigger = false;
+    _singleTrigger = false;
     pollingTimer->start(_pollingInterval);
 }
 
@@ -91,8 +91,16 @@ void SoundSensor::pollForSound()
     {
         //stop polling
         pollingTimer->stop();
-        //there was a single trigger option here, changed to multi trigger only
-        waitForMultipleTriggers();
+
+        if(_singleTrigger)
+        {
+            qDebug() << "emit soundDetected(1)";
+            emit soundDetected(1);
+        }
+        else
+        {
+            waitForMultipleTriggers();
+        }
     }
     //sound sensor must now be re-started by handler
 }

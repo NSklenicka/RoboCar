@@ -13,7 +13,6 @@ void CurrentMonitor::start()
 {
     LOG
     _turning = false;
-    DELAY(_startDelayMS);
     timer->start(_pollingInterval);
 }
 
@@ -21,7 +20,6 @@ void CurrentMonitor::startWhileTurning()
 {
     LOG
     _turning = true;
-    DELAY(_startDelayMS);
     timer->start(_pollingInterval);
 }
 
@@ -49,11 +47,6 @@ bool CurrentMonitor::overCurrentHolds()
 
     qDebug() << "OI did not hold. i: " << i;
     return false;
-}
-
-void CurrentMonitor::setStartDelayMS(int newStartDelayMS)
-{
-    _startDelayMS = newStartDelayMS;
 }
 
 void CurrentMonitor::pollForOverCurrent()

@@ -27,7 +27,6 @@ struct VoiceSettings
 
 struct OISettings
 {
-    int startDelay;
     int OiPollInterval;
     int OiNums;
 };
