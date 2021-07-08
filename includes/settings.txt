@@ -18,6 +18,7 @@ enabled = 0
 [OI Settings]
 OINums=4
 OiPollInterval=100
+startDelay=300
 
 [Prox Settings]
 proxEnabled = 0
