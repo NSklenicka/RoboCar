@@ -16,6 +16,7 @@ isDirty = 0
 enabled = 0
 
 [OI Settings]
+startDelay=300
 OINums=4
 OiPollInterval=100
 
